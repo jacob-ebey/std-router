@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"lib": ["DOM", "DOM.Iterable", "ES2022"],
+		"types": ["node", "urlpattern-polyfill", "vite/client"],
+		"module": "Node16",
+		"target": "ES2022",
+		"moduleResolution": "Node16",
+		"isolatedModules": true,
+		"declaration": true,
+		"noEmit": true,
+		"baseUrl": "./"
+	}
+}
