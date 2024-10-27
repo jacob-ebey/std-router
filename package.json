@@ -1,11 +1,11 @@
 {
 	"name": "std-router",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"type": "module",
 	"description": "",
 	"files": ["dist", "README.md"],
-	"types": "dist/std-router.js",
-	"main": "index.js",
+	"types": "dist/std-router.d.ts",
+	"main": "dist/std-router.js",
 	"exports": {
 		".": {
 			"types": "./dist/std-router.d.ts",
