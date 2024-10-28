@@ -4,7 +4,8 @@ import { concatPaths } from "./pathname.js";
 
 export type { Context } from "./context.js";
 export { defineContext } from "./context.js";
-export type { concatPaths } from "./pathname.js";
+export type { ConcatPathname, ExtractPathnameParams } from "./pathname.js";
+export { concatPaths } from "./pathname.js";
 
 export interface Route<Path extends string, RendererImp extends Renderer<any>> {
 	path: Path;
