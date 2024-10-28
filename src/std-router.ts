@@ -27,9 +27,7 @@ type RequestContext<RendererImp extends Renderer<any>> = {
 	get<T>(context: Context<T>, required?: boolean): T;
 	set<T>(context: Context<T>, value: T): void;
 	render: RendererImp extends Renderer<infer Body>
-		? Body extends never
-			? never
-			: RenderFunction<Body>
+		? RenderFunction<Body>
 		: never;
 };
 
