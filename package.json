@@ -1,44 +1,41 @@
 {
-  "name": "std-router",
-  "version": "0.0.3",
-  "type": "module",
-  "description": "",
-  "files": [
-    "dist",
-    "README.md"
-  ],
-  "types": "dist/std-router.d.ts",
-  "main": "dist/std-router.js",
-  "exports": {
-    ".": {
-      "types": "./dist/std-router.d.ts",
-      "node": {
-        "module-sync": "./dist/std-router.js",
-        "default": "./dist/std-router.cjs"
-      },
-      "require": {
-        "types": "./dist/std-router.d.cts",
-        "default": "./dist/std-router.cjs"
-      },
-      "default": "./dist/std-router.js"
-    }
-  },
-  "scripts": {
-    "build": "tsup",
-    "format": "biome check --write .",
-    "test": "vitest"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@types/node": "22.8.1",
-    "ts-toolbelt": "9.6.0",
-    "tsup": "8.3.0",
-    "typescript": "5.6.3",
-    "urlpattern-polyfill": "10.0.0",
-    "vite": "5.4.10",
-    "vitest": "2.1.3"
-  }
+	"name": "std-router",
+	"version": "0.0.4",
+	"type": "module",
+	"description": "",
+	"files": ["dist", "README.md"],
+	"types": "dist/std-router.d.ts",
+	"main": "dist/std-router.js",
+	"exports": {
+		".": {
+			"types": "./dist/std-router.d.ts",
+			"node": {
+				"module-sync": "./dist/std-router.js",
+				"default": "./dist/std-router.cjs"
+			},
+			"require": {
+				"types": "./dist/std-router.d.cts",
+				"default": "./dist/std-router.cjs"
+			},
+			"default": "./dist/std-router.js"
+		}
+	},
+	"scripts": {
+		"build": "tsup",
+		"format": "biome check --write .",
+		"test": "vitest"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@types/node": "22.8.1",
+		"ts-toolbelt": "9.6.0",
+		"tsup": "8.3.0",
+		"typescript": "5.6.3",
+		"urlpattern-polyfill": "10.0.0",
+		"vite": "5.4.10",
+		"vitest": "2.1.3"
+	}
 }

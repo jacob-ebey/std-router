@@ -9,7 +9,7 @@ export type { concatPaths } from "./pathname.js";
 export interface Route<Path extends string, RendererImp extends Renderer<any>> {
 	path: Path;
 	handler: RequestHandler<RendererImp>;
-	middleware: BoundMiddleware[];
+	middleware: ReadonlyArray<BoundMiddleware>;
 	renderer: RendererImp;
 }
 
@@ -97,14 +97,33 @@ export class Router<
 
 	route<const Path extends string>(
 		path: Path,
-		handler: RequestHandler<BaseRenderer>,
+		handler:
+			| RequestHandler<BaseRenderer>
+			| (() => Promise<{ default: RequestHandler<BaseRenderer> }>)
+			| (() => { default: RequestHandler<BaseRenderer> })
+			| (() => Promise<{ handler: RequestHandler<BaseRenderer> }>)
+			| (() => { handler: RequestHandler<BaseRenderer> }),
 	) {
 		const newRoute = {
 			path: concatPaths(this.basePath, path),
-			handler,
+			handler: async (c) => {
+				const handlerResult = await handler(c);
+				const mod =
+					"default" in handlerResult
+						? handlerResult.default
+						: "handler" in handlerResult
+							? handlerResult.handler
+							: null;
+
+				if (mod == null) {
+					return handlerResult as Response;
+				}
+
+				return mod(c);
+			},
 			middleware: this.baseMiddleware,
 			renderer: this.baseRenderer,
-		} as Route<ConcatPathname<BasePath, Path>, BaseRenderer>;
+		} satisfies Route<ConcatPathname<BasePath, Path>, BaseRenderer>;
 
 		return new Router<
 			BasePath,
