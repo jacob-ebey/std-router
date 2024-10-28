@@ -232,16 +232,29 @@ export async function runMatch(match: RouteMatch, request: Request) {
 		},
 	};
 
-	let next: () => Promise<Response> | Response = () =>
-		match.route.handler(context);
+	let next: (request?: Request) => Promise<Response> | Response = () =>
+		match.route.handler({
+			...context,
+			request: request ?? context.request,
+		});
 	for (let i = match.route.middleware.length - 1; i >= 0; i--) {
 		const middleware = match.route.middleware[i];
 		const previousNext = next;
-		next = () =>
+		next = (request?: Request) =>
 			middleware.middleware(
 				{
 					...context,
-					render: (value, init) => middleware.renderer(context, value, init),
+					request: request ?? context.request,
+					render: (value, init) =>
+						middleware.renderer(
+							{
+								...context,
+								render: undefined as never,
+								request: request ?? context.request,
+							},
+							value,
+							init,
+						),
 				},
 				previousNext,
 			);
