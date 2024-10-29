@@ -1,6 +1,6 @@
 {
 	"name": "std-router",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"type": "module",
 	"description": "",
 	"files": ["dist", "README.md"],
@@ -14,7 +14,8 @@
 				"default": "./dist/std-router.js"
 			},
 			"default": "./dist/std-router.js"
-		}
+		},
+		"./package.json": "./package.json"
 	},
 	"scripts": {
 		"build": "tsup",
