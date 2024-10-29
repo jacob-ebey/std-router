@@ -78,7 +78,9 @@ export class Router<
 			...this.routes,
 			...(routes.map((route: AnyRoute) => ({
 				...route,
+				middleware: [...this.baseMiddleware, ...route.middleware],
 				path: concatPaths(concatPaths(this.basePath, path), route.path),
+				renderer: route.renderer ?? this.baseRenderer,
 			})) as unknown as MountRoutes),
 		]);
 	}

@@ -404,3 +404,75 @@ test("can access context in renderer", async ({ expect }) => {
 	expect(renderer).toHaveBeenCalledTimes(1);
 	expect(handler).toHaveBeenCalledTimes(1);
 });
+
+test("can mount middleware", async ({ expect }) => {
+	const ctx = defineContext<number>();
+	const middleware = vi.fn<Middleware<any>>((c, n) => {
+		c.set(ctx, (c.get(ctx, false) ?? 40) + 1);
+		return n();
+	});
+	const renderer = vi.fn<Renderer<number>>(
+		(c, n, i) => new Response((n + c.get(ctx)).toString()),
+	);
+	const handler = vi.fn<RequestHandler<typeof renderer>>(({ render }) =>
+		render(1),
+	);
+
+	const routes = defineRoutes((router) =>
+		router.use(middleware).renderer(renderer).route("/a", handler),
+	);
+
+	const mountedRoutes = defineRoutes((router) =>
+		router.mount("/test", ...routes),
+	);
+
+	const match = matchRoutes(
+		mountedRoutes,
+		new URL("https://example.com/test/a"),
+	);
+	const response = await runMatch(
+		match!,
+		new Request("https://example.com/test/a"),
+	);
+	expect(await response.text()).toEqual("42");
+
+	expect(middleware).toHaveBeenCalledTimes(1);
+	expect(renderer).toHaveBeenCalledTimes(1);
+	expect(handler).toHaveBeenCalledTimes(1);
+});
+
+test("can forward middleware to mount", async ({ expect }) => {
+	const ctx = defineContext<number>();
+	const middleware = vi.fn<Middleware<any>>((c, n) => {
+		c.set(ctx, (c.get(ctx, false) ?? 40) + 1);
+		return n();
+	});
+	const renderer = vi.fn<Renderer<number>>(
+		(c, n, i) => new Response((n + c.get(ctx)).toString()),
+	);
+	const handler = vi.fn<RequestHandler<typeof renderer>>(({ render }) =>
+		render(1),
+	);
+
+	const routes = defineRoutes((router) =>
+		router.renderer(renderer).route("/a", handler),
+	);
+
+	const mountedRoutes = defineRoutes((router) =>
+		router.use(middleware).mount("/test", ...routes),
+	);
+
+	const match = matchRoutes(
+		mountedRoutes,
+		new URL("https://example.com/test/a"),
+	);
+	const response = await runMatch(
+		match!,
+		new Request("https://example.com/test/a"),
+	);
+	expect(await response.text()).toEqual("42");
+
+	expect(middleware).toHaveBeenCalledTimes(1);
+	expect(renderer).toHaveBeenCalledTimes(1);
+	expect(handler).toHaveBeenCalledTimes(1);
+});
