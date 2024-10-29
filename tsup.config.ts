@@ -3,6 +3,6 @@ import { defineConfig } from "tsup";
 export default defineConfig({
 	entry: ["src/std-router.ts"],
 	dts: true,
-	format: ["cjs", "esm"],
+	format: ["esm"],
 	platform: "neutral",
 });

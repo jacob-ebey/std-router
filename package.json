@@ -1,6 +1,6 @@
 {
 	"name": "std-router",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"type": "module",
 	"description": "",
 	"files": ["dist", "README.md"],
@@ -11,11 +11,7 @@
 			"types": "./dist/std-router.d.ts",
 			"node": {
 				"module-sync": "./dist/std-router.js",
-				"default": "./dist/std-router.cjs"
-			},
-			"require": {
-				"types": "./dist/std-router.d.cts",
-				"default": "./dist/std-router.cjs"
+				"default": "./dist/std-router.js"
 			},
 			"default": "./dist/std-router.js"
 		}
